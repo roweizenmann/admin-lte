@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="../index2.html"><b>Admin</b>LTE</a>
+            <a href="{{ route('login') }}"><b>Admin</b>LTE</a>
         </div>
         <div class="card">
             <div class="card-body login-card-body">
@@ -38,7 +38,7 @@
 
                 <div class="mt-2 text-center">
                     <p class="mb-0">
-                        <a href="register.html" class="text-center">Back to Login</a>
+                        <a href="{{ route('login') }}" class="text-center">Back to Login</a>
                     </p>
                 </div>
 

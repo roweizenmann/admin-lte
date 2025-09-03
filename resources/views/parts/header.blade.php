@@ -151,8 +151,11 @@
 
                     </li>
                     <li class="user-footer">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-default btn-flat float-end">Logout</button>
+                        </form>
                         <a href="#" class="btn btn-default btn-flat">Profile</a>
-                        <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
                     </li>
 
                 </ul>
