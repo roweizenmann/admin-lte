@@ -1,9 +1,14 @@
 @extends('layouts.default')
 @section('page-title', 'Usuários')
 @section('page-actions')
-    <a href="" class="btn btn-primary">Adicionar usuário</a>
+    <a href="{{ route('users.create') }}" class="btn btn-primary">Adicionar usuário</a>
 @endsection
 @section('content')
+    @session('status')
+    <div class="alert alert-success">
+        {{ $value }}
+    </div>
+    @endsession
     <table class="table">
         <thead>
         <tr>
