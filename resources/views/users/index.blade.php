@@ -26,8 +26,14 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    <a href="" class="btn btn-primary btn-sm">Editar</a>
-                    <a href="" class="btn btn-danger btn-sm">Excluir</a>
+                    <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                    <form action="{{ route('users.destroy', $user->id) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Excluir
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach

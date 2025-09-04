@@ -32,4 +32,32 @@ class UserController extends Controller
             ->route('users.index')
             ->with('status', 'Usuário adicionado com sucesso');
     }
+
+    public function edit(User $user)
+    {
+        return view('users.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $input = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'exclude_if:password,null|min:8',
+        ]);
+
+        $user->fill($input)->save();
+
+        return back()
+            ->with('status', 'Usuário atualizado com sucesso');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return back()
+            ->with('status', 'Usuário removido com sucesso');
+    }
 }
