@@ -35,6 +35,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $user->load('profile');
         return view('users.edit', [
             'user' => $user
         ]);
@@ -52,6 +53,21 @@ class UserController extends Controller
 
         return back()
             ->with('status', 'Usuário atualizado com sucesso');
+    }
+
+    public function updateProfile(User $user, Request $request)
+    {
+        $input = $request->validate([
+            'type' => 'required',
+            'address' => 'nullable'
+        ]);
+
+        $user->profile()->updateOrCreate([
+            'user_id' => $user->id,], $input);
+
+        return back()
+            ->with('status', 'Perfil atualizado com sucesso');
+
     }
 
     public function destroy(User $user)
