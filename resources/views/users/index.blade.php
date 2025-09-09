@@ -25,7 +25,7 @@
                 <th scope="row">{{ $user->id }}</th>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>
+                <td style="display: flex; gap: 5px;">
                     <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
                     <form action="{{ route('users.destroy', $user->id) }}" method="post">
                         @csrf
