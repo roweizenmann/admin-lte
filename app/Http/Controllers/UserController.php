@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate();
         return view('users.index', [
             'users' => $users
         ]);
@@ -36,8 +37,10 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $user->load(['profile', 'interests']);
+        $roles = Role::all();
         return view('users.edit', [
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles
         ]);
     }
 
@@ -81,6 +84,19 @@ class UserController extends Controller
         if (!empty($input['interests'])) {
             $user->interests()->createMany($input['interests']);
         }
+
+        return back()
+            ->with('status', 'Usuário editado com sucesso');
+    }
+
+    public function updateRoles(User $user, Request $request)
+    {
+
+        $input = $request->validate([
+            'roles' => 'required|array'
+        ]);
+
+        $user->roles()->sync($input['roles']);
 
         return back()
             ->with('status', 'Usuário editado com sucesso');

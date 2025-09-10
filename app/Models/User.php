@@ -54,4 +54,8 @@ class User extends Authenticatable
     public function interests(){
         return $this->hasMany(UserInterest::class);
     }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
 }
