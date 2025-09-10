@@ -8,10 +8,22 @@
         <div class="card-body">
             @foreach(['Futebol', 'Formula 1'] as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{ $item }}" name="interests[][name]">
+                    <input
+                        class="form-check-input @error('interests') is-invalid @enderror"
+                        type="checkbox"
+                        value="{{ $item }}" name="interests[][name]"
+                        @checked(in_array($item, $user->interests->pluck('name')->toArray()))
+                    >
                     <label class="form-check-label">
                         {{ $item }}
                     </label>
+                    @if($loop->last)
+                        @error('interests')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    @endif
                 </div>
             @endforeach
         </div>
