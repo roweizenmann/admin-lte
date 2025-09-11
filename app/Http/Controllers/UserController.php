@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -45,6 +46,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        Gate::authorize('edit', $user);
         $user->load(['profile', 'interests']);
         $roles = Role::all();
         return view('users.edit', [
@@ -55,6 +57,8 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        Gate::authorize('edit', $user);
+
         $input = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -69,6 +73,8 @@ class UserController extends Controller
 
     public function updateProfile(User $user, Request $request)
     {
+        Gate::authorize('edit', $user);
+
         $input = $request->validate([
             'type' => 'required',
             'address' => 'nullable'
@@ -84,6 +90,8 @@ class UserController extends Controller
 
     public function updateInterests(User $user, Request $request)
     {
+        Gate::authorize('edit', $user);
+
         $input = $request->validate([
             'interests' => 'nullable|array'
         ]);
@@ -100,6 +108,7 @@ class UserController extends Controller
 
     public function updateRoles(User $user, Request $request)
     {
+        Gate::authorize('edit', $user);
 
         $input = $request->validate([
             'roles' => 'required|array'
@@ -113,6 +122,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        Gate::authorize('destroy', $user);
+
         $user->delete();
         return back()
             ->with('status', 'Usuário removido com sucesso');

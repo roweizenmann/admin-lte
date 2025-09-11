@@ -35,14 +35,20 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td style="display: flex; gap: 5px;">
-                    <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                    <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger btn-sm">
-                            Excluir
-                        </button>
-                    </form>
+
+                    @can('edit', \App\Models\User::class)
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                    @endcan
+
+                    @can('destroy', \App\Models\User::class)
+                        <form action="{{ route('users.destroy', $user->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Excluir
+                            </button>
+                        </form>
+                    @endcan
                 </td>
             </tr>
         @endforeach
